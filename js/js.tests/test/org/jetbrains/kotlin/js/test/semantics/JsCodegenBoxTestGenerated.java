@@ -19147,6 +19147,11 @@ public class JsCodegenBoxTestGenerated extends AbstractJsCodegenBoxTest {
             KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/codegen/box/unsignedTypes"), Pattern.compile("^(.+)\\.kt$"), TargetBackend.JS, true);
         }
 
+        @TestMetadata("deserializedPropertyWithSpeicalOverriddenMethod.kt")
+        public void testDeserializedPropertyWithSpeicalOverriddenMethod() throws Exception {
+            runTest("compiler/testData/codegen/box/unsignedTypes/deserializedPropertyWithSpeicalOverriddenMethod.kt");
+        }
+
         @TestMetadata("varargsOfUnsignedTypes.kt")
         public void testVarargsOfUnsignedTypes() throws Exception {
             runTest("compiler/testData/codegen/box/unsignedTypes/varargsOfUnsignedTypes.kt");

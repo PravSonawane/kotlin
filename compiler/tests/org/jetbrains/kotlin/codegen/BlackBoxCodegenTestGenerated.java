@@ -21234,6 +21234,11 @@ public class BlackBoxCodegenTestGenerated extends AbstractBlackBoxCodegenTest {
             runTest("compiler/testData/codegen/box/unsignedTypes/checkBasicUnsignedLiterals.kt");
         }
 
+        @TestMetadata("deserializedPropertyWithSpeicalOverriddenMethod.kt")
+        public void testDeserializedPropertyWithSpeicalOverriddenMethod() throws Exception {
+            runTest("compiler/testData/codegen/box/unsignedTypes/deserializedPropertyWithSpeicalOverriddenMethod.kt");
+        }
+
         @TestMetadata("evaluateConstructorOfUnsignedType.kt")
         public void testEvaluateConstructorOfUnsignedType() throws Exception {
             runTest("compiler/testData/codegen/box/unsignedTypes/evaluateConstructorOfUnsignedType.kt");
