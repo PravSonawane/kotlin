@@ -40,7 +40,9 @@ abstract class AbstractLineMarkersTest : KotlinLightCodeInsightFixtureTestCase()
         return KotlinWithJdkAndRuntimeLightProjectDescriptor.INSTANCE
     }
 
-    fun doTest(path: String) {
+    fun doTest(path: String) = doTest(path) {}
+
+    fun doTest(path: String, additionalCheck: () -> Unit) {
         val fileText = FileUtil.loadFile(File(path))
         try {
             ConfigLibraryUtil.configureLibrariesByDirective(myFixture.module, PlatformTestUtil.getCommunityPath(), fileText)
@@ -87,6 +89,7 @@ abstract class AbstractLineMarkersTest : KotlinLightCodeInsightFixtureTestCase()
             }
 
             assertNavigationElements(markers)
+            additionalCheck()
         }
         catch (exc: Exception) {
             throw RuntimeException(exc)
@@ -98,7 +101,7 @@ abstract class AbstractLineMarkersTest : KotlinLightCodeInsightFixtureTestCase()
 
     }
 
-    private fun assertNavigationElements(markers: List<LineMarkerInfo<*>>) {
+    protected fun assertNavigationElements(markers: List<LineMarkerInfo<*>>) {
         val navigationDataComments = KotlinTestUtils.getLastCommentsInFile(
                 myFixture.file as KtFile, KotlinTestUtils.CommentType.BLOCK_COMMENT, false)
         if (navigationDataComments.isEmpty()) return
