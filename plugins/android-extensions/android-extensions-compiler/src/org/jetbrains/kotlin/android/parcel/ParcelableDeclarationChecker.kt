@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.FrameMap
 import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
 import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
+import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.DeclarationDescriptor
 import org.jetbrains.kotlin.descriptors.PropertyDescriptor
@@ -24,8 +25,8 @@ import org.jetbrains.kotlin.lexer.KtTokens
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.BindingContext
-import org.jetbrains.kotlin.resolve.checkers.DeclarationCheckerContext
 import org.jetbrains.kotlin.resolve.checkers.DeclarationChecker
+import org.jetbrains.kotlin.resolve.checkers.DeclarationCheckerContext
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.resolve.jvm.annotations.findJvmFieldAnnotation
@@ -173,8 +174,8 @@ class ParcelableDeclarationChecker : DeclarationChecker {
             ClassBuilderMode.FULL,
             IncompatibleClassTracker.DoNothing,
             descriptor.module.name.asString(),
-            /* isJvm8Target */ false,
-            /* isReleaseCoroutines */ KotlinTypeMapper.RELEASE_COROUTINES_DEFAULT
+            JvmTarget.DEFAULT,
+            KotlinTypeMapper.RELEASE_COROUTINES_DEFAULT
         )
 
         for (parameter in primaryConstructor?.valueParameters.orEmpty()) {

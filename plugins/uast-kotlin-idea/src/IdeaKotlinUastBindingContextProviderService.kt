@@ -19,6 +19,7 @@ package org.jetbrains.uast.kotlin.internal
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
 import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
+import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.idea.caches.resolve.analyze
 import org.jetbrains.kotlin.load.java.JvmAbi
 import org.jetbrains.kotlin.psi.KtElement
@@ -31,7 +32,7 @@ class IdeaKotlinUastBindingContextProviderService : KotlinUastBindingContextProv
     override fun getTypeMapper(element: KtElement): KotlinTypeMapper? {
         return KotlinTypeMapper(
             getBindingContext(element), ClassBuilderMode.LIGHT_CLASSES,
-            IncompatibleClassTracker.DoNothing, JvmAbi.DEFAULT_MODULE_NAME, false, KotlinTypeMapper.RELEASE_COROUTINES_DEFAULT
+            IncompatibleClassTracker.DoNothing, JvmAbi.DEFAULT_MODULE_NAME, JvmTarget.DEFAULT, KotlinTypeMapper.RELEASE_COROUTINES_DEFAULT
         )
     }
 }

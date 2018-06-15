@@ -165,7 +165,6 @@ class GenerationState private constructor(
     val languageVersionSettings = configuration.languageVersionSettings
 
     val target = configuration.get(JVMConfigurationKeys.JVM_TARGET) ?: JvmTarget.DEFAULT
-    val isJvm8Target: Boolean = target == JvmTarget.JVM_1_8
 
     val moduleName: String = moduleName ?: JvmCodegenUtil.getModuleName(module)
     val classBuilderMode: ClassBuilderMode = builderFactory.classBuilderMode
@@ -179,7 +178,7 @@ class GenerationState private constructor(
         classBuilderMode,
         IncompatibleClassTrackerImpl(extraJvmDiagnosticsTrace),
         this.moduleName,
-        isJvm8Target,
+        target,
         configuration.languageVersionSettings.supportsFeature(LanguageFeature.ReleaseCoroutines)
     )
     val intrinsics: IntrinsicMethods = run {
