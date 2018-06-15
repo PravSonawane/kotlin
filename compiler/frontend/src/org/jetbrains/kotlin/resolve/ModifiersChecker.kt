@@ -338,15 +338,15 @@ object ModifierCheckerCore {
 
         val dependencies = featureDependencies[modifier] ?: return true
         for (dependency in dependencies) {
+            val restrictedTargets = featureDependenciesTargets[dependency]
+            if (restrictedTargets != null && actualTargets.intersect(restrictedTargets).isEmpty()) {
+                continue
+            }
+
             val featureSupport = languageVersionSettings.getFeatureSupport(dependency)
 
             val diagnosticData = dependency to languageVersionSettings
             if (featureSupport == LanguageFeature.State.ENABLED_WITH_ERROR || featureSupport == LanguageFeature.State.DISABLED) {
-                val restrictedTargets = featureDependenciesTargets[dependency]
-                if (restrictedTargets != null && actualTargets.intersect(restrictedTargets).isEmpty()) {
-                    continue
-                }
-
                 if (featureSupport == LanguageFeature.State.DISABLED) {
                     trace.report(Errors.UNSUPPORTED_FEATURE.on(node.psi, diagnosticData))
                 } else {
