@@ -12,13 +12,10 @@ import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 import org.jetbrains.kotlin.platform.JavaToKotlinClassMap
-import org.jetbrains.kotlin.resolve.DescriptorUtils
+import org.jetbrains.kotlin.resolve.*
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameUnsafe
-import org.jetbrains.kotlin.resolve.isInlineClassType
 import org.jetbrains.kotlin.resolve.jvm.JvmClassName
 import org.jetbrains.kotlin.resolve.jvm.JvmPrimitiveType
-import org.jetbrains.kotlin.resolve.substitutedUnderlyingType
-import org.jetbrains.kotlin.resolve.unsubstitutedUnderlyingType
 import org.jetbrains.kotlin.types.*
 import org.jetbrains.kotlin.types.typeUtil.replaceArgumentsWithStarProjections
 import org.jetbrains.kotlin.utils.DO_NOTHING_3
@@ -129,7 +126,14 @@ fun <T : Any> mapType(
             if (descriptor.isInline && !mode.needInlineClassWrapping) {
                 val typeForMapping = computeUnderlyingType(kotlinType)
                 if (typeForMapping != null) {
-                    val newMode = if (typeForMapping.isInlineClassType()) mode else mode.wrapInlineClassesMode()
+                    val newMode = if (kotlinType.isUnderlyingTypeIsTypeParameter()) {
+                        mode.wrapInlineClassesMode().boxPrimitivesMode()
+                    } else if (!typeForMapping.isInlineClassType()) {
+                        mode.wrapInlineClassesMode()
+                    } else {
+                        mode
+                    }
+
                     return mapType(typeForMapping, factory, newMode, typeMappingConfiguration, descriptorTypeWriter, writeGenericType)
                 }
             }
@@ -220,12 +224,7 @@ private fun <T : Any> mapBuiltInType(
 
 private fun computeUnderlyingType(inlineClassType: KotlinType): KotlinType? {
     if (!shouldUseUnderlyingType(inlineClassType)) return null
-
-    val descriptor = inlineClassType.unsubstitutedUnderlyingType()?.constructor?.declarationDescriptor ?: return null
-    return if (descriptor is TypeParameterDescriptor)
-        getRepresentativeUpperBound(descriptor)
-    else
-        inlineClassType.substitutedUnderlyingType()
+    return inlineClassType.substitutedUnderlyingType()
 }
 
 private fun shouldUseUnderlyingType(inlineClassType: KotlinType): Boolean {

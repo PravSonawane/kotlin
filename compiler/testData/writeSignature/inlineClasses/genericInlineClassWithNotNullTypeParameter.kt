@@ -12,15 +12,15 @@ object Test {
 }
 
 // method: Test::withNotNullPrimitive
-// jvm signature: (Ljava/lang/Object;)V
+// jvm signature: (Ljava/lang/Integer;)V
 // generic signature: null
 
 // method: Test::asNullable
-// jvm signature: (Ljava/lang/Object;)V
+// jvm signature: (Ljava/lang/Integer;)V
 // generic signature: null
 
 // method: Test::withNotNullForNullableValue
-// jvm signature: (Ljava/lang/Object;)V
+// jvm signature: (Ljava/lang/Integer;)V
 // generic signature: null
 
 // method: Test::asNullableForNullableValue

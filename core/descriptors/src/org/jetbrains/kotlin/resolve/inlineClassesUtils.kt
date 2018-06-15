@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.kotlin.types.TypeUtils
+import org.jetbrains.kotlin.types.typeUtil.isTypeParameter
 import org.jetbrains.kotlin.utils.addToStdlib.safeAs
 
 fun ClassDescriptor.underlyingRepresentation(): ValueParameterDescriptor? {
@@ -35,7 +36,12 @@ fun KotlinType.substitutedUnderlyingType(): KotlinType? {
 
 fun KotlinType.isNullableUnderlyingType(): Boolean {
     if (!isInlineClassType()) return false
-    val underlyingType = unsubstitutedUnderlyingType() ?: return false
+    val underlyingType = substitutedUnderlyingType() ?: return false
 
     return TypeUtils.isNullableType(underlyingType)
+}
+
+fun KotlinType.isUnderlyingTypeIsTypeParameter(): Boolean {
+    if (!isInlineClassType()) return false
+    return unsubstitutedUnderlyingType()?.isTypeParameter() ?: false
 }

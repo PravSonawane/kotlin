@@ -15,19 +15,19 @@ object Test {
 }
 
 // method: Test::withNotNullPrimitive
-// jvm signature: (Ljava/lang/Object;)V
+// jvm signature: (Ljava/lang/Integer;)V
 // generic signature: null
 
 // method: Test::withAdditionalGenericParameter
-// jvm signature: (LInv;Ljava/lang/Object;)V
-// generic signature: (LInv<Ljava/lang/String;>;Ljava/lang/Object;)V
+// jvm signature: (LInv;Ljava/lang/String;)V
+// generic signature: (LInv<Ljava/lang/String;>;Ljava/lang/String;)V
 
 // method: Test::asNullable
 // jvm signature: (LDefault;)V
 // generic signature: (LDefault<Ljava/lang/Integer;>;)V
 
 // method: Test::asNullableTypeArgument
-// jvm signature: (Ljava/lang/Object;)V
+// jvm signature: (Ljava/lang/Integer;)V
 // generic signature: null
 
 // method: Test::asNullableAndNullableTypeArgument

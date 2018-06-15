@@ -396,7 +396,7 @@ public abstract class StackValue {
     private static void boxInlineClass(@NotNull KotlinType kotlinType, @NotNull InstructionAdapter v) {
         Type boxedType = KotlinTypeMapper.mapInlineClassTypeAsDeclaration(kotlinType);
         Type owner = KotlinTypeMapper.mapToErasedInlineClassType(kotlinType);
-        Type underlyingType = KotlinTypeMapper.mapUnderlyingTypeOfInlineClassType(kotlinType);
+        Type underlyingType = KotlinTypeMapper.mapUnsubstitutedUnderlyingTypeOfInlineClassType(kotlinType);
         v.invokestatic(
                 owner.getInternalName(),
                 InlineClassDescriptorResolver.BOX_METHOD_NAME.asString(),
@@ -410,7 +410,7 @@ public abstract class StackValue {
 
         coerce(type, owner, v);
 
-        Type resultType = KotlinTypeMapper.mapUnderlyingTypeOfInlineClassType(targetInlineClassType);
+        Type resultType = KotlinTypeMapper.mapUnsubstitutedUnderlyingTypeOfInlineClassType(targetInlineClassType);
         v.invokevirtual(
                 owner.getInternalName(),
                 InlineClassDescriptorResolver.UNBOX_METHOD_NAME.asString(),
@@ -493,7 +493,8 @@ public abstract class StackValue {
     }
 
     private static boolean isUnboxedInlineClass(@NotNull KotlinType kotlinType, @NotNull Type actualType) {
-        return KotlinTypeMapper.mapUnderlyingTypeOfInlineClassType(kotlinType).equals(actualType);
+        Type underlyingType = KotlinTypeMapper.mapUnderlyingTypeOfInlineClassType(kotlinType);
+        return underlyingType.equals(actualType) || underlyingType.equals(AsmUtil.boxType(actualType));
     }
 
     public static void coerce(@NotNull Type fromType, @NotNull Type toType, @NotNull InstructionAdapter v) {

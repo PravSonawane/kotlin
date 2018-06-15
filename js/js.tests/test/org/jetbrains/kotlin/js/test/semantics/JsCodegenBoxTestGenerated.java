@@ -9802,6 +9802,11 @@ public class JsCodegenBoxTestGenerated extends AbstractJsCodegenBoxTest {
             runTest("compiler/testData/codegen/box/inlineClasses/inlineClassAsLastExpressionInInLambda.kt");
         }
 
+        @TestMetadata("inlineClassWithUnderlyingTypeParameter.kt")
+        public void testInlineClassWithUnderlyingTypeParameter() throws Exception {
+            runTest("compiler/testData/codegen/box/inlineClasses/inlineClassWithUnderlyingTypeParameter.kt");
+        }
+
         @TestMetadata("inlineFunctionInsideInlineClass.kt")
         public void testInlineFunctionInsideInlineClass() throws Exception {
             runTest("compiler/testData/codegen/box/inlineClasses/inlineFunctionInsideInlineClass.kt");

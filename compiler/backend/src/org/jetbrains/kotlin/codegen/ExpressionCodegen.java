@@ -2158,7 +2158,7 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
                 "Constructor call expression of inline class should have inline class type, but have: " + inlineClassType;
 
         Type underlyingType = typeMapper.mapType(inlineClassType);
-        KotlinType underlyingKotlinType = InlineClassesUtilsKt.unsubstitutedUnderlyingType(inlineClassType);
+        KotlinType underlyingKotlinType = InlineClassesUtilsKt.substitutedUnderlyingType(inlineClassType);
 
         StackValue argumentValue = gen(valueArgument.getArgumentExpression());
 
