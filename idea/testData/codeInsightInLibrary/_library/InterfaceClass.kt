@@ -1,16 +1,16 @@
 package library
 
-interface <lineMarker>My</lineMarker> {
+interface My {
     fun foo(): Int
 
     val s: String
 }
 
 class Your : My {
-    override fun foo(): Int {
+    override fun <lineMarker>foo</lineMarker>(): Int {
         return 42
     }
 
-    override val s: String
+    override val <lineMarker>s</lineMarker>: String
         get() = ""
 }

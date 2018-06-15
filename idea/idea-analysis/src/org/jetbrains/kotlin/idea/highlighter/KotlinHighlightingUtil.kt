@@ -16,6 +16,7 @@
 
 package org.jetbrains.kotlin.idea.highlighter
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.idea.caches.project.NotUnderContentRootModuleInfo
 import org.jetbrains.kotlin.idea.caches.project.getModuleInfo
@@ -40,7 +41,8 @@ object KotlinHighlightingUtil {
             return shouldHighlightScript(ktFile)
         }
 
-        return ProjectRootsUtil.isInProjectOrLibraryContent(ktFile) && ktFile.getModuleInfo() !is NotUnderContentRootModuleInfo
+        return ProjectRootsUtil.isInProjectOrLibraryContent(ktFile) &&
+                (ktFile.getModuleInfo() !is NotUnderContentRootModuleInfo || ApplicationManager.getApplication().isUnitTestMode)
     }
 
     fun shouldHighlightErrors(psiElement: PsiElement): Boolean {

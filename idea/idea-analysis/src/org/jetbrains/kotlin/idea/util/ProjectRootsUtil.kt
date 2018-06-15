@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.idea.util
 import com.intellij.ide.highlighter.ArchiveFileType
 import com.intellij.ide.highlighter.JavaClassFileType
 import com.intellij.injected.editor.VirtualFileWindow
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.fileTypes.FileTypeManager
@@ -77,6 +78,7 @@ object ProjectRootsUtil {
             if (scriptConfigurationManager?.getAllScriptsClasspathScope()?.contains(file) == true) return true
         }
         if (includeLibrarySource && !isBinary) {
+            if (ApplicationManager.getApplication().isUnitTestMode) return true
             if (fileIndex.isInLibrarySource(file)) return true
             if (scriptConfigurationManager?.getAllLibrarySourcesScope()?.contains(file) == true) return true
         }

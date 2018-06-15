@@ -15,6 +15,7 @@ import com.intellij.util.io.createFile
 import com.intellij.util.io.write
 import org.jetbrains.kotlin.idea.test.PluginTestCaseBase
 import org.jetbrains.kotlin.idea.test.SdkAndMockLibraryProjectDescriptor
+import org.jetbrains.kotlin.idea.util.ProjectRootsUtil
 import org.jetbrains.kotlin.test.KotlinTestUtils
 import org.jetbrains.kotlin.test.TagsTestDataUtil
 import java.io.File
@@ -58,6 +59,10 @@ abstract class AbstractLineMarkersTestInLibrarySources : AbstractLineMarkersTest
                 data.init()
 
                 PsiDocumentManager.getInstance(project).commitAllDocuments()
+
+                if (!ProjectRootsUtil.isLibrarySourceFile(project, myFixture.file.virtualFile)) {
+                    throw AssertionError("File ${myFixture.file.virtualFile.path} should be in library sources!")
+                }
 
                 myFixture.doHighlighting()
 
