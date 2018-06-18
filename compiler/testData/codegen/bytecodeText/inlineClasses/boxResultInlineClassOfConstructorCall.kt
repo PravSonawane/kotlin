@@ -10,7 +10,7 @@ fun test() {
     val d = Result<Result<Int>>(Result<Int>(1)) // valueOf, box
 }
 
-// 2 INVOKESTATIC Result\$Erased.box
+// 0 INVOKESTATIC Result\$Erased.box
 // 0 INVOKEVIRTUAL Result.unbox
 
 // 2 valueOf
